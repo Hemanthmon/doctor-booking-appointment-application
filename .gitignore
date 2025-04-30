@@ -9,5 +9,5 @@ backend/.env
 admin/.env
 
 # Ignore build and log files
-frontend/build/
+
 backend/.log
