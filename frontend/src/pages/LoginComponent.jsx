@@ -4,16 +4,54 @@ import { Mail, Lock, Loader } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Input from '../components/InputField.jsx';
 import { useAuthStore } from '../store/authStore.js';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoading, error } = useAuthStore();
+  const { login, isLoading, error,  setVerificationEmail, clearError, clearVerificationEmail } = useAuthStore();
+  const [countdown, setCountdown] = useState(8);
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    clearError();
+    clearVerificationEmail();
+  }, [clearError, clearVerificationEmail]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    const response = await login(email, password);
+
+    if(response?.user && !response.user.isVerified) {
+      setVerificationEmail(email); // Store email for verification
+      setShowVerificationMessage(true);
+      setCountdown(8);
+      setTimeout(() => {
+        navigate("/verify-email", { state: { email } }); // ✅ Redirects to verification page
+      }, 8000);
+    }else {
+      clearVerificationEmail();
+    }
   };
+
+  useEffect(() => {
+    if (showVerificationMessage) {
+      const timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === 1) {
+            clearInterval(timer);
+            navigate("/verify-email" , {state : {email}}); // Redirect when countdown reaches 0
+          }
+          return prev - 1;
+        });
+      }, 1000);
+  
+      return () => clearInterval(timer); // Cleanup on unmount
+    }
+  }, [showVerificationMessage, navigate]);
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
@@ -41,7 +79,7 @@ const LoginComponent = () => {
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              autocomplete="email"
+              autoComplete="email"
             />
             <Input
               icon={Lock}
@@ -49,14 +87,22 @@ const LoginComponent = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autocomplete="current-password"
+              autoComplete="current-password"
             />
             <div className="flex items-center justify-between mb-6">
               <Link to="/forgot-password" className="text-sm text-purple-500 hover:underline">
                 Forgot password?
               </Link>
             </div>
-            {error && <p className="text-red-500 font-semibold mb-2">{error}</p>}
+            
+      {showVerificationMessage ? (
+        <div className="text-center text-red-500 font font-semibold mb-2 ">
+          Your email is not verified. Redirecting to verification page in {countdown} seconds...
+        </div>
+     
+      ) : (
+            error && <p className="text-red-500 font-semibold mb-2">{error}</p>
+          )}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

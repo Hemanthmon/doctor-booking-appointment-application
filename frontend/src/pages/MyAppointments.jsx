@@ -8,7 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const MyAppointments = () => {
   const { backendUrl, getDoctorsData } = useContext(AppContext);
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, isLoading } = useAuthStore();
   const [appointment, setAppointment] = useState([]);
   const [loading, setLoading] = useState(true); // Manage loading state
   const [appointmentsFetched, setAppointmentsFetched] = useState(false);
@@ -18,11 +18,18 @@ const MyAppointments = () => {
     const dateArray = slotDate.split('-');
     return dateArray[0]+" "+months[Number(dateArray[1])] + " " + dateArray[2];
  }
+ useEffect(() => {
   if (!isAuthenticated) {
-    toast.warn('Please login to book an appointment');
-    navigate('/login');
-    return null; // Ensure component does not render further
+    toast.warn("Please login to book an appointment");
+    navigate("/login");
   }
+}, [isAuthenticated, navigate]);
+
+useEffect(() => {
+  if (user) {
+    getUserAppointments();
+  }
+}, [user]);
 
   const getUserAppointments = async () => {
     setLoading(true);
@@ -158,6 +165,9 @@ const MyAppointments = () => {
       return { line1: 'No address available', line2: '' }; // Fallback
     }
   };
+  if (isLoading || loading) {
+    return <LoadingSpinner />; // Show spinner while loading
+  }
 
   return (
     <div>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Confirmation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin: auto;
+    }
+    .header {
+      background: linear-gradient(to right, #800080, #d233ff);
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+    .success-icon {
+      width: 50px;
+      margin-bottom: 15px;
+    }
+    .details {
+      background: #f7f7f7;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+      margin-top: 15px;
+    }
+    .details p {
+      margin: 8px 0;
+      color: #333;
+      font-size: 14px;
+    }
+    .btn {
+      background: #800080;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .footer {
+      background: #f0e6ff;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-top: 20px;
+    }
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 90%;
+      }
+      .header {
+        font-size: 18px;
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Payment Successful</div>
+    <div class="content">
+      <img src="https://res.cloudinary.com/deeqkisit/image/upload/v1741773939/check_mark_efqjgf.png" alt="Success" class="success-icon">
+      <p>Dear <strong>${name}</strong>,</p>
+      <p>Your payment of <strong style="font-size: 18px; color: #800080;">₹${amount}</strong> has been successfully processed.</p>
+      <div class="details">
+        <p><strong>Payment ID:</strong> ${paymentId}</p>
+        <p><strong>Payment Date:</strong> ${paymentDate} at ${paymentTime}</p>
+        <p><strong>Doctor:</strong> Dr. ${docName} (${speciality})</p>
+        <p><strong>Clinic Address:</strong> ${address.line}${address.line2 ? ', ' + address.line2 : ''}</p>
+        <p><strong>Appointment Date & Time:</strong> ${slotDate} at ${slotTime}</p>
+      </div>
+      <a href="#" class="btn">View Appointment Details</a>
+    </div>
+    <div class="footer">Best regards,<br><strong>Prescripto Team</strong></div>
+  </div>
+</body>
+</html>

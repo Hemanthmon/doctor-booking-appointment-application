@@ -1,0 +1,89 @@
+export const APPOINTMENT_CONFIRMATION_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Confirmation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f3e5f5;
+      font-family: 'Poppins', sans-serif;
+      color: #4a148c;
+    }
+    .container {
+      max-width: 600px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(74, 20, 140, 0.3);
+      overflow: hidden;
+      margin: auto;
+    }
+    .header {
+      background: linear-gradient(to right, #6a1b9a, #ab47bc);
+      padding: 25px;
+      text-align: center;
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 25px;
+      text-align: center;
+    }
+    .details {
+      background: #ede7f6;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      margin-top: 20px;
+    }
+    .details p {
+      margin: 10px 0;
+      color: #4a148c;
+      font-size: 16px;
+    }
+    .footer {
+      background: #d1c4e9;
+      padding: 20px;
+      text-align: center;
+      font-size: 15px;
+      color: #4a148c;
+      margin-top: 25px;
+      font-weight: bold;
+    }
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 90%;
+      }
+      .header {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Appointment Confirmed</div>
+    <div class="content">
+      <p>Dear <strong>{userName}</strong>,</p>
+      <p>Your appointment with Dr. <strong>{docName}</strong> is confirmed. Here are the details:</p>
+      <div class="details">
+        <p><strong>Date:</strong> {slotDate}</p>
+        <p><strong>Time:</strong> {slotTime}</p>
+        <p><strong>Consultation Fee:</strong> ₹{amount}</p>
+      </div>
+      <p><strong>Instructions for Your Appointment:</strong></p>
+      <div class="details">
+        <p>✔ Please arrive 15 minutes early to complete any necessary paperwork.</p>
+        <p>✔ Carry a valid photo ID and any previous medical records.</p>
+        <p>✔ If you have any symptoms or questions, note them down to discuss with the doctor.</p>
+      </div>
+    </div>
+    <div class="footer">Best regards,<br><strong>Prescripto Team</strong></div>
+  </div>
+</body>
+</html>
+`;

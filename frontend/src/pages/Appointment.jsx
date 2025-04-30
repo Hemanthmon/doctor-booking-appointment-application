@@ -6,12 +6,13 @@ import RelatedDoctors from '../components/RelatedDoctors';
 import { useAuthStore } from '../store/authStore.js';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 const Appointment = () => {
   const { docId } = useParams();
   const navigate = useNavigate();
   const { doctors, currencySymbol, backendUrl, getDoctorsData } = useContext(AppContext);
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user, isLoading } = useAuthStore();
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
   const [docInfo, setDocInfo] = useState(null);
@@ -138,6 +139,13 @@ const Appointment = () => {
     }
   }, [docInfo]);
 
+  if (isLoading) {
+    return <LoadingSpinner />; // ✅ Show loading first before rendering content
+  }
+
+  if (!isAuthenticated || !user) {
+    return <p className="text-center text-red-500 font-semibold mt-4">Please log in to book an appointment.</p>;
+  }
   return (
     docInfo && (
       <div>

@@ -6,7 +6,7 @@ import { json, response } from "express"
 import jwt from 'jsonwebtoken'
 import appointmentModel from "../models/appointmentModel.js"
 import { userModel } from "../models/userModel.js"
-
+import { sendWelcomeDoctorEmail } from "../mailtrap/emails.js"
 //API for adding doctor
 const addDoctor = async (req, res) => {
 
@@ -58,6 +58,8 @@ const addDoctor = async (req, res) => {
        const newDoctor = new doctorModel(doctorData)
        // this will add the doctor details to database
        await newDoctor.save()
+
+       await sendWelcomeDoctorEmail(email, name, password);
 
        res.json({success:true, message:"Doctors Details added successfully"})
 

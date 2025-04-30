@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, signup, verifyEmail, forgotPassword, resetPassword, checkAuth, getProfile, updateProfile, bookAppointment, getAppointments, cancelAppointment, paymentRazorpay, verifyPayment } from "../controllers/authController.js";
+import { login, logout, signup, verifyEmail, forgotPassword, resetPassword, checkAuth, getProfile, updateProfile, bookAppointment, getAppointments, cancelAppointment, paymentRazorpay, verifyPayment, resendVerificationCode } from "../controllers/authController.js";
 import { verifyToken } from '../middlewares/verifyToken.js'
 import upload from "../middlewares/multer.js";
 
@@ -28,6 +28,8 @@ router.post("/verifyRazorpay", verifyToken, verifyPayment)
 router.post("/logout", logout);
 
 router.post("/verify-email", verifyEmail)
+
+router.post("/resend-verification-email", resendVerificationCode);
 
 router.post("/forgot-password", forgotPassword)
 

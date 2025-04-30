@@ -8,7 +8,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import razorpay from 'razorpay'
 
 import { generateTokenAndCookie } from '../utils/generateTokenAndSetCookie.js'
-import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendResetSuccessEmail, sendAppointmentConfirmationEmail } from '../mailtrap/emails.js'
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendResetSuccessEmail, sendAppointmentConfirmationEmail, sendPaymentReceiptEmail } from '../mailtrap/emails.js'
 import { group } from 'console';
 
 
@@ -66,8 +66,6 @@ export const signup = async (req, res) => {
                 address: newUser.address,
                 createdAt: newUser.createdAt,
                 updatedAt: newUser.updatedAt,
-            },
-            user: {
                 lastLogin: newUser.lastLogin,
                 isVerified: newUser.isVerified,
                 verificationToken: newUser.verificationToken,
@@ -90,12 +88,13 @@ export const verifyEmail = async (req, res) => {
     const { code } = req.body;
     try {
         console.log("recieved code :", code)
+
         const user = await userModel.findOne({
             verificationToken: code,
             verificationTokenExpiresAt: { $gt: Date.now() },
         })
-
-        if (!user) {
+// made some changes here
+        if (!user || !user.verificationTokenExpiresAt || user.verificationTokenExpiresAt < Date.now()) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid or expired verification code"
@@ -116,7 +115,7 @@ export const verifyEmail = async (req, res) => {
             user: {
                 name: user.name,
                 email: user.email,
-
+                isVerified: true
             }
         })
 
@@ -128,6 +127,50 @@ export const verifyEmail = async (req, res) => {
         });
     }
 }
+
+export const resendVerificationCode = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is already verified",
+            });
+        }
+
+        // Generate a new verification code and update expiry
+        const newVerificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+        user.verificationToken = newVerificationToken;
+        user.verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000; // 10 mins expiry
+
+        await user.save();
+
+        // Send the new code to the user's email
+        await sendVerificationEmail(user.email, newVerificationToken);
+
+        res.status(200).json({
+            success: true,
+            message: "A new verification code has been sent to your email.",
+        });
+
+    } catch (error) {
+        console.error("Error in resendVerificationCode:", error);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong. Please try again later.",
+        });
+    }
+};
 
 export const login = async (req, res) => {
     const { email, password } = req.body
@@ -151,6 +194,7 @@ export const login = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Logged in successfully",
+            isAuthenticated: true,
             user: {
                 ...user._doc,
                 password: undefined,
@@ -257,7 +301,7 @@ export const updateProfile = async (req, res) => {
         // Update user details
         const updatedUser = await userModel.findOneAndUpdate(
             { _id: userId },
-            { name, phone, address: parsedAddress, dob, gender, bloodGroup },
+            { name, phone, address: parsedAddress, dob, gender : gender || "Not Selected", bloodGroup },
             { new: true }
         );
         if (!updatedUser) {
@@ -440,13 +484,15 @@ export const paymentRazorpay = async (req, res) => {
             }
             
 
-            if (amount !== appointmentData.docData.fees) {
-                console.error("Invalid amount provided");
-                return res.status(400).json({ 
-                    success: false,
-                    message: "The amount provided does not match the appointment fees"
-                 });
-            }
+            // if (amount !== appointmentData.docData.fees) {
+            //     console.error("Invalid amount provided");
+            //     return res.status(400).json({ 
+            //         success: false,
+            //         message: "The amount provided does not match the appointment fees"
+            //      });
+            // }
+
+            // creating options  for payment
             const options = {
                 amount: amount * 100,
                 currency: process.env.CURRENCY,
@@ -469,34 +515,145 @@ export const paymentRazorpay = async (req, res) => {
 
 }
 // API to verify the payment
-export const verifyPayment = async (req, res) => { 
+//  export const verifyPayment = async (req, res) => { 
     
+//     try {
+//         console.log("Received request body:", req.body);
+//         const { razorpay_order_id, razorpay_payment_id, razorpay_signature} = req.body;
+
+//         if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+//             console.log("Missing razorpay_payment_id in request body");
+//             return res.status(400).json({ 
+//                 success: false, 
+//                 message: "Missing required payment verification fields." });
+//         }
+
+//         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+ 
+//         console.log("Order Info:", orderInfo);
+
+//         const appointment = await appointmentModel
+//         .findById(orderInfo.receipt)
+//         .populate("userId", "email name")
+//         .lean();
+
+//         console.log("✅ Appointment Data:", appointment); // Debugging step
+
+//         if (!appointment) {
+//             return res.status(404).json({ success: false, message: "❌ Appointment not found" });
+//         }
+
+//         const userEmail = appointment.userData?.email || appointment.userId?.email;
+//         const userName = appointment.userData?.name ||  appointment.userId?.name;
+
+//         console.log("✅ Extracted Email:", userEmail);
+//         console.log("✅ Extracted Name:", userName);
+//         // const userEmail = appointment.userId.email;
+//         // const userName = appointment.userId.name;
+
+//         if (!userEmail || !userName) {
+//             console.error("❌ Email or Name missing in appointment data!");
+//             return res.status(500).json({ success: false, message: "Email or Name missing in appointment data" });
+//         }
+
+        
+
+        
+//         if(orderInfo.status === 'paid'){
+//             // Update appointment payment status in the databasrun e
+//             await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment:true});
+//             await sendPaymentReceiptEmail(userEmail, userName, orderInfo.amount / 100, "Success", razorpay_payment_id);
+//             res.status(200).json({success:true,message:"Payment Successful"})   
+//         } else {
+//             res.status(400).json({success:false,message:"Payment Failed"})
+//         }
+//     } catch (error) {
+//         console.error("Error in proceeding payment:", error);
+//         res.status(500).json({ success: false, message: "Error verifying payment. Please try again." });
+//     }
+//  }
+export const verifyPayment = async (req, res) => { 
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature} = req.body;
+        console.log("Received request body:", req.body); // ✅ Check incoming request
+
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
         if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
-            console.log("Missing razorpay_payment_id in request body");
-            return res.status(400).json({ 
-                success: false, 
-                message: "Missing required payment verification fields." });
+            console.log("❌ Missing required fields in request body.");
+            return res.status(400).json({
+                success: false,
+                message: "Missing required payment verification fields."
+            });
         }
 
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+        console.log("✅ Order Info:", orderInfo);
 
-        console.log("Order Info:", orderInfo);
+        // Fetch the appointment and populate the user details
+        const appointment = await appointmentModel
+            .findById(orderInfo.receipt)
+            .populate("userId", "email name") // Ensure `userId` references a User model
+            .lean();  // Convert to a plain object
 
-        if(orderInfo.status === 'paid'){
-            // Update appointment payment status in the database
-            await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment:true});
-            res.status(200).json({success:true,message:"Payment Successful"})   
+        console.log("✅ Appointment Data:", appointment);
+
+        if (!appointment) {
+            return res.status(404).json({ success: false, message: "❌ Appointment not found" });
+        }
+
+        // Extract email & name from userData or userId
+        const userEmail = appointment.userData?.email || appointment.userId?.email;
+        const userName = appointment.userData?.name || appointment.userId?.name;
+
+        console.log("✅ Extracted Email:", userEmail);
+        console.log("✅ Extracted Name:", userName);
+
+        if (!userEmail || !userName) {
+            console.error("❌ Email or Name missing in appointment data!");
+            return res.status(500).json({ success: false, message: "Email or Name missing in appointment data" });
+        }
+        const doctorName = appointment.docData?.name || "Unknown Doctor";
+        const doctorSpeciality = appointment.docData?.speciality || "General Practitioner";
+        const clinicAddress = `${appointment.docData?.address?.line1 || ""}, ${appointment.docData?.address?.line2 || ""}`;
+        const appointmentDate = appointment.slotDate;
+        const appointmentTime = appointment.slotTime;
+        const paymentDate = new Date().toLocaleDateString();
+        const paymentTime = new Date().toLocaleTimeString(); 
+
+        console.log("✅ Doctor Name:", doctorName);
+        console.log("✅ Speciality:", doctorSpeciality);
+        console.log("✅ Clinic Address:", clinicAddress);
+        console.log("✅ Appointment Date:", appointmentDate);
+        console.log("✅ Appointment Time:", appointmentTime);
+        console.log("✅ Payment time:", paymentTime);
+        console.log("✅ payment date :", paymentDate);
+  
+
+        if (orderInfo.status === 'paid') {
+            await appointmentModel.findByIdAndUpdate(orderInfo.receipt, { payment: true });
+            await sendPaymentReceiptEmail(userEmail, 
+                userName,
+                 orderInfo.amount / 100, 
+                 "Success",
+                  razorpay_payment_id,
+                  doctorName,
+                  doctorSpeciality,
+                  clinicAddress,
+                  appointmentDate,
+                  appointmentTime,
+                  paymentDate, 
+                  paymentTime
+                );
+            return res.status(200).json({ success: true, message: "✅ Payment Successful" });
         } else {
-            res.status(400).json({success:false,message:"Payment Failed"})
+            return res.status(400).json({ success: false, message: "❌ Payment Failed" });
         }
     } catch (error) {
-        console.error("Error in proceeding payment:", error);
-        res.status(500).json({ success: false, message: "Error verifying payment. Please try again." });
+        console.error("❌ Error in verifying payment:", error);
+        return res.status(500).json({ success: false, message: "Error verifying payment. Please try again." });
     }
- }
+};
+
 
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
@@ -611,3 +768,5 @@ export const checkAuth = async (req, res) => {
         res.status(400).json({ success: false, message: error.message })
     }
 }
+
+

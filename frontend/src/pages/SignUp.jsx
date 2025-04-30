@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { Loader } from 'lucide-react'; 
@@ -12,8 +12,13 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formError, setFormError] = useState("");
+    
+    const { signup, error, isLoading, setVerificationEmail, clearError } = useAuthStore();
     const navigate = useNavigate();
-    const { signup, error, isLoading } = useAuthStore();
+
+    useEffect(() => {
+        clearError();
+    }, [clearError]);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -28,7 +33,8 @@ const SignUp = () => {
     
         try {
             await signup(email, password, name);
-            navigate("/verify-email");
+            setVerificationEmail(email); // ✅ Store email for verification
+            navigate("/verify-email",  { state: { email } });
         } catch (error) {
             console.error(error);
         }

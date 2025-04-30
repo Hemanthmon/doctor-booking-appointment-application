@@ -20,113 +20,82 @@ import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react'
 import { useAuthStore } from './store/authStore';
 import ResetPasswordPage from './pages/ResetPasswordPage'
-//protect routes that requires authentication
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, user,  } = useAuthStore();
 
-  if(!isAuthenticated){
-    return <Navigate to="/login" replace/>
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
   }
-  
-  if(!user.isVerified){
-    return <Navigate to="/verify-email" replace/>
+
+  if (!user.isVerified) {
+    return <Navigate to="/verify-email" replace />
   }
-  
- 
 
   return children;
 }
 
-//redirect the authenticated user to home page 
-const RedirectAuthenticatedUser = ({children}) => {
-  const {isAuthenticated, user} =useAuthStore();
+const RedirectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
 
-  if(isAuthenticated && user.isVerified){
+  if (isAuthenticated && user?.isVerified) {
     return <Navigate to="/" replace />
   }
   return children;
 }
 
-
 const App = () => {
-
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
- // fetch aunthintecation status on app load
+  const { isCheckingAuth, checkAuth } = useAuthStore();
   useEffect(() => {
     checkAuth()
   }, [checkAuth])
 
+  if (isCheckingAuth) return <LoadingSpinner />;
 
-  if(isCheckingAuth) return <LoadingSpinner />;
-
-  const location = useLocation(); // Detect the current route
-  
-  // List of routes where floating shapes should appear
-  // const floatingShapeRoutes = ['/login', '/signup', '/forgot-password', '/reset-password'];
+  const location = useLocation();
+  const hideHeaderFooterRoutes = ['/verify-email', '/forgot-password', '/reset-password/:token', '/login', '/signUp'];
+  const shouldHideHeaderFooter = hideHeaderFooterRoutes.some(route => location.pathname.startsWith(route.replace('/:token', '')));
 
   return (
     <div className='mx-4 sm:mx-[10%] relative'>
-      <Navbar />
-      
-      {/* Conditionally render Floating Shapes */}
-      {/* {floatingShapeRoutes.includes(location.pathname) && (
-        <>
-          <FloatingShape color='bg-purple-700' size='w-64 h-64' top='-5%' left='10%' delay={0} />
-			     <FloatingShape color='bg-purple-700' size='w-48 h-48' top='70%' left='80%' delay={5} />
-			<FloatingShape color='bg-purple-700' size='w-32 h-32' top='40%' left='-10%' delay={2} />
-        </>
-      )} */}
-
+      {!shouldHideHeaderFooter && <Navbar />}
       <Routes>
-        <Route path='/' element={
-          <ProtectedRoute>
-
-          <Home />
-          
-          </ProtectedRoute>
-           } />
+        <Route path='/' element={<Home />} />
         <Route path='/doctors' element={<Doctors />} />
         <Route path='/doctors/:speciality' element={<Doctors />} />
         <Route path='/login' element={
-           <RedirectAuthenticatedUser>
-           <LoginComponent />
-         </RedirectAuthenticatedUser>
+          <RedirectAuthenticatedUser>
+            <LoginComponent />
+          </RedirectAuthenticatedUser>
         } />
         <Route path='/Signup' element={
           <RedirectAuthenticatedUser>
             <SignUp />
           </RedirectAuthenticatedUser>
         } />
-        <Route path='/verify-email' element={<EmailVerification/>}/>
-
-        <Route path='/forgot-password' element={<RedirectAuthenticatedUser>
-          <ForgotPasswordPage/>
-        </RedirectAuthenticatedUser>}/>
-
-        <Route
-        path='/reset-password/:token'
-
-        element={
+        <Route path='/verify-email' element={<EmailVerification />} />
+        <Route path='/forgot-password' element={
           <RedirectAuthenticatedUser>
-            <ResetPasswordPage/>
+            <ForgotPasswordPage />
           </RedirectAuthenticatedUser>
-        }
-        />
-        
+        } />
+        <Route path='/reset-password/:token' element={
+          <RedirectAuthenticatedUser>
+            <ResetPasswordPage />
+          </RedirectAuthenticatedUser>
+        } />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/my-appointments' element={<MyAppointments />} />
-        <Route path='/appointment/:docId'
-         element={
+        <Route path='/appointment/:docId' element={
           <ProtectedRoute>
             <Appointment />
-
           </ProtectedRoute>
-         } />
+        } />
       </Routes>
-    <Toaster />
-      <Footer />
+      <Toaster />
+      {!shouldHideHeaderFooter && <Footer />}
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { assets } from '../assets/assets';
+import { assets } from '../assets/assets.js';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 
 const Navbar = () => {
-  const { user, logout, userData } = useAuthStore(); // Access user and logout functions from auth store.
+  const { user, logout,  isAuthenticated, userData } = useAuthStore(); // Access user and logout functions from auth store.
   const navigate = useNavigate();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -39,13 +39,13 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-4">
-        {user ? (
+        {isAuthenticated && user ? (
           // If the user is logged in, show the profile dropdown.
           <div className="flex items-center gap-2 cursor-pointer group relative">
             <img
               onClick={() => navigate('/')}
               className="w-8 rounded-full"
-              src={user.image}
+              src={user?.image || assets.profile_pic || "https://via.placeholder.com/150" }
               alt="profile picture"
             />
             <img className="w-2.5" src={assets.dropdown_icon} alt="" />
