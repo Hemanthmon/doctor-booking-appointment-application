@@ -115,7 +115,7 @@ const appointmentsAdmin = async (req, res) => {
 }
 
 //API for appointment cancellation
-
+//API for appointment cancellation
  const appointmentCancel = async (req, res) => {
   try {
       const { appointmentId } = req.body;
