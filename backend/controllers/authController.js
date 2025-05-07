@@ -1,7 +1,7 @@
 import { userModel } from '../models/userModel.js'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
-import bcryptjs from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 import validator from 'validator';
 import { v2 as cloudinary } from 'cloudinary'

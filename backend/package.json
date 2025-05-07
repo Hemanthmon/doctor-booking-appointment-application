@@ -8,7 +8,6 @@
     "server": "nodemon server.js",
     "build": "echo 'No build step required for backend'",
     "test": "echo \"Error: no test specified\" && exit 1"
-    
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +15,7 @@
   "dependencies": {
     "@getbrevo/brevo": "^2.2.0",
     "@sendgrid/mail": "^8.1.4",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
