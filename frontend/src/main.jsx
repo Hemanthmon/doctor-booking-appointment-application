@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 import AppContextProvider from './context/AppContext.jsx'
 //importing the router from the ract
 
+axios.defaults.withCredentials = true;
+
+
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <AppContextProvider>
