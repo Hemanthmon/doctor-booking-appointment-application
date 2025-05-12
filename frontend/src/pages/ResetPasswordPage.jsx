@@ -48,6 +48,12 @@ const ResetPasswordPage = () => {
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {message && <p className="text-purple-600 text-sm mb-4">{message}</p>}
 
+        <p className="text-sm text-gray-600 mb-4">
+  Please enter your new password below. Make sure it's strong and something you can remember.
+  A strong password includes at least 8 characters, a mix of uppercase, lowercase, numbers, and special characters.
+</p>
+
+
         <form onSubmit={handleSubmit}>
           <Input
             icon={Lock}
