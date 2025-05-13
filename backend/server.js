@@ -26,7 +26,9 @@ const allowedOrigins = [
   "http://localhost:5174", // local admin panel
   process.env.CLIENT_ORIGIN, // deployed user panel
   process.env.ADMIN_ORIGIN,   // deployed admin panel
-   "https://doctor-booking-appointment-appl-git-d67992-hemanthmons-projects.vercel.app"
+  "https://doctor-booking-appointment-application.vercel.app", // Deployed user panel
+  "https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app" // Deployed admin panel
+
 ];
 
 //! CORS configuration (with logging and proper handling)
@@ -34,16 +36,18 @@ app.use(cors({
   origin: function (origin, callback) {
     console.log("CORS request from origin:", origin);
     if (!origin || allowedOrigins.includes(origin)) {
+      // If origin is undefined or allowed, accept the request
       callback(null, true);
     } else {
       console.error("❌ Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true, // Allow cookies to be sent
+  credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "atoken", "dtoken"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
+
 
 // No need to duplicate app.options – already handled above
 
