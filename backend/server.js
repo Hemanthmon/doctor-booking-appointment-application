@@ -25,7 +25,8 @@ const allowedOrigins = [
   "http://localhost:5173", // local user panel
   "http://localhost:5174", // local admin panel
   process.env.CLIENT_ORIGIN, // deployed user panel
-  process.env.ADMIN_ORIGIN   // deployed admin panel
+  process.env.ADMIN_ORIGIN,   // deployed admin panel
+   "https://doctor-booking-appointment-appl-git-d67992-hemanthmons-projects.vercel.app"
 ];
 
 //! CORS configuration (with logging and proper handling)
