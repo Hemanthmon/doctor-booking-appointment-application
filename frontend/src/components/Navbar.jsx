@@ -61,7 +61,7 @@ const Navbar = () => {
             </button>
             {/* Admin Panel Button */}
             <a
-              href="https://vercel.com/hemanthmons-projects/doctor-booking-appointment-application-6gu7/FR5kXyVrqPn2qG5fKChZhpJAprm5"
+              href="https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-purple-600 text-white px-5 py-2 rounded-full font-light hidden md:block"
@@ -106,7 +106,7 @@ const Navbar = () => {
             <>
               <NavLink to="/login" onClick={() => setShowMenu(false)} className="text-blue-600 mt-4">Login</NavLink>
               <a
-                href="https://doctor-booking-appointment-application-6gu7.vercel.app/"
+                href="https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-600"
