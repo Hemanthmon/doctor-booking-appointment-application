@@ -10,15 +10,17 @@ export const generateTokenAndCookie = (res, userId) => {
     // 2. Set the token as an HTTP-only cookie in the response
     res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // HTTPS in production only
-        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // "Lax" for local dev
+        secure: true,
+        sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000,
         path: "/",
       });
       console.log("Setting cookie with:", {
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax"
+        
       });
-      
+      console.log("NODE_ENV is:", process.env.NODE_ENV);
+
     return token; // Optional: return token if needed elsewhere
 };
