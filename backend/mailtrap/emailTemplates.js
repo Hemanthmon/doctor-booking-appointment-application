@@ -340,67 +340,73 @@ export const PASSWORD_RESET_SUCCESS_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Password Reset Successful</title>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Password Reset Successful</h1>
-  </div>
-  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>We're writing to confirm that your password has been successfully reset.</p>
-    <div style="text-align: center; margin: 30px 0;">
-      <div style="background-color: #4CAF50; color: white; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; display: inline-block; font-size: 30px;">
-        ✓
-      </div>
+<body style="font-family: 'Segoe UI', sans-serif; background-color: #f4f3fc; color: #333; margin: 0; padding: 0;">
+  <div style="max-width: 600px; margin: 40px auto; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: linear-gradient(to right, #7b2cbf, #9d4edd); padding: 20px; text-align: center;">
+      <h1 style="color: #fff; margin: 0;">Prescripto</h1>
     </div>
-    <p>If you did not initiate this password reset, please contact our support team immediately.</p>
-    <p>For security reasons, we recommend that you:</p>
-    <ul>
-      <li>Use a strong, unique password</li>
-      <li>Enable two-factor authentication if available</li>
-      <li>Avoid using the same password across multiple sites</li>
-    </ul>
-    <p>Thank you for helping us keep your account secure.</p>
-    <p>Best regards,<br>Your App Team</p>
-  </div>
-  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
-    <p>This is an automated message, please do not reply to this email.</p>
+    <div style="padding: 30px;">
+      <h2 style="color: #6A0DAD;">Password Reset Successful</h2>
+      <p>Hello,</p>
+      <p>We’re confirming that your password has been successfully reset.</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <div style="background-color: #7b2cbf; color: white; width: 60px; height: 60px; line-height: 60px; border-radius: 50%; display: inline-block; font-size: 30px;">
+          ✓
+        </div>
+      </div>
+      <p>If you did not perform this action, please contact our support team immediately.</p>
+      <p>Your account security is important to us. If you notice any suspicious activity, don't hesitate to reach out.</p>
+      <p>Need help? Email us at <a href="mailto:hemmon963@gmail.com" style="color: #6A0DAD;">hemmon963@gmail.com</a>.</p>
+      <p>Thank you for using Prescripto.</p>
+      <p>Best regards,<br/>Team Prescripto</p>
+    </div>
+    <div style="background-color: #f0eaff; text-align: center; padding: 10px; font-size: 12px; color: #888;">
+      <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
   </div>
 </body>
 </html>
 `;
 
+
+
 export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Reset Your Password</title>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
-    <h1 style="color: white; margin: 0;">Password Reset</h1>
-  </div>
-  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <p>Hello,</p>
-    <p>We received a request to reset your password. If you didn't make this request, please ignore this email.</p>
-    <p>To reset your password, click the button below:</p>
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="{resetURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+<body style="font-family: 'Segoe UI', sans-serif; background-color: #f4f3fc; color: #333; margin: 0; padding: 0;">
+  <div style="max-width: 600px; margin: 40px auto; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: linear-gradient(to right, #7b2cbf, #9d4edd); padding: 20px; text-align: center;">
+      <h1 style="color: #fff; margin: 0;">Prescripto</h1>
     </div>
-    <p>This link will expire in 1 hour for security reasons.</p>
-    <p>Best regards,<br>Your App Team</p>
-  </div>
-  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
-    <p>This is an automated message, please do not reply to this email.</p>
+    <div style="padding: 30px;">
+      <h2 style="color: #6A0DAD;">Reset Your Password</h2>
+      <p>Hello,</p>
+      <p>We received a request to reset your password. If you didn't make this request, you can safely ignore this email.</p>
+      <p>Click the button below to reset your password:</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="{resetURL}" style="background-color: #7b2cbf; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Reset Password</a>
+      </div>
+      <p>This link will expire in 1 hour for security reasons.</p>
+      <p>If you have any questions, reach out to us at <a href="mailto:hemmon963@gmail.com" style="color: #6A0DAD;">hemmon963@gmail.com</a>.</p>
+      <p>Best regards,<br/>Team Prescripto</p>
+    </div>
+    <div style="background-color: #f0eaff; text-align: center; padding: 10px; font-size: 12px; color: #888;">
+      <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
   </div>
 </body>
 </html>
 `;
+
 export const APPOINTMENT_CONFIRMATION_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">

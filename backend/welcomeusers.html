@@ -1,101 +1,33 @@
+export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Confirmation</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #f9f9f9;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      max-width: 600px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      margin: auto;
-    }
-    .header {
-      background: linear-gradient(to right, #800080, #d233ff);
-      padding: 20px;
-      text-align: center;
-      color: #fff;
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .content {
-      padding: 20px;
-      text-align: center;
-    }
-    .success-icon {
-      width: 50px;
-      margin-bottom: 15px;
-    }
-    .details {
-      background: #f7f7f7;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: left;
-      margin-top: 15px;
-    }
-    .details p {
-      margin: 8px 0;
-      color: #333;
-      font-size: 14px;
-    }
-    .btn {
-      background: #800080;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 5px;
-      text-decoration: none;
-      display: inline-block;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .footer {
-      background: #f0e6ff;
-      padding: 15px;
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-      margin-top: 20px;
-    }
-    @media screen and (max-width: 480px) {
-      .container {
-        width: 90%;
-      }
-      .header {
-        font-size: 18px;
-      }
-      .btn {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Your Password</title>
 </head>
-<body>
-  <div class="container">
-    <div class="header">Payment Successful</div>
-    <div class="content">
-      <img src="https://res.cloudinary.com/deeqkisit/image/upload/v1741773939/check_mark_efqjgf.png" alt="Success" class="success-icon">
-      <p>Dear <strong>${name}</strong>,</p>
-      <p>Your payment of <strong style="font-size: 18px; color: #800080;">₹${amount}</strong> has been successfully processed.</p>
-      <div class="details">
-        <p><strong>Payment ID:</strong> ${paymentId}</p>
-        <p><strong>Payment Date:</strong> ${paymentDate} at ${paymentTime}</p>
-        <p><strong>Doctor:</strong> Dr. ${docName} (${speciality})</p>
-        <p><strong>Clinic Address:</strong> ${address.line}${address.line2 ? ', ' + address.line2 : ''}</p>
-        <p><strong>Appointment Date & Time:</strong> ${slotDate} at ${slotTime}</p>
-      </div>
-      <a href="#" class="btn">View Appointment Details</a>
+<body style="font-family: 'Segoe UI', sans-serif; background-color: #f5f4fc; margin: 0; padding: 0;">
+  <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <div style="background-color: #6A0DAD; padding: 30px 20px; text-align: center;">
+      <h1 style="color: white; margin: 0;">Prescripto</h1>
+      <p style="color: #ddd; margin: 5px 0 0;">Reset Your Password</p>
     </div>
-    <div class="footer">Best regards,<br><strong>Prescripto Team</strong></div>
+    <div style="padding: 30px 20px;">
+      <p>Hello,</p>
+      <p>We received a request to reset your password.</p>
+      <p>If you didn’t make this request, you can safely ignore this email.</p>
+      <p>Otherwise, click the button below to reset your password:</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="{resetURL}" style="background-color: #6A0DAD; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Reset Password</a>
+      </div>
+      <p>This link will expire in 1 hour for security reasons.</p>
+      <p>Best regards,<br/>The Prescripto Team</p>
+    </div>
+    <div style="background-color: #f3effd; text-align: center; padding: 20px; font-size: 0.85em; color: #555;">
+      <p>This is an automated message, please do not reply directly.</p>
+      <p>If you have any questions, contact <a href="mailto:hemmon963@gmail.com" style="color: #6A0DAD; text-decoration: none;">hemmon963@gmail.com</a></p>
+    </div>
   </div>
 </body>
 </html>
+`;
