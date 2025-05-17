@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import 'dotenv/config'
+import dotenv from "dotenv"
 import connectDB from './config/mongodb.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route.js"
 import doctorRouter from './routes/doctorRoute.js'
 import cookieParser from 'cookie-parser'
 
+dotenv.config();
 //! App config
 const app = express()
 const port = process.env.PORT || 4000
