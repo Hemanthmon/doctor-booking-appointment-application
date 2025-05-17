@@ -107,6 +107,7 @@ const Navbar = () => {
               <NavLink to="/login" onClick={() => setShowMenu(false)} className="text-blue-600 mt-4">Login</NavLink>
               <a
                 href="https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app"
+                //https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-600"
