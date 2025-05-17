@@ -51,11 +51,12 @@ const MyProfile = () => {
   };
 
   return  userData && (
-    <div className='max-w-2xl mx-auto flex flex-col gap-6 bg-white shadow-xl p-8 rounded-2xl relative overflow-hidden border border-purple-50'>
+    <div className='w-full max-w-2xl mx-auto flex flex-col gap-6 bg-white shadow-xl p-4 sm:p-6 md:p-8 rounded-2xl relative overflow-hidden border border-purple-50'>
+
       {/* Gradient Background Elements */}
       {/* <div className='absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-r from-purple-800 to-pink-100 rounded-full blur-2xl opacity-50'></div>
       <div className='absolute -bottom-32 -right-32 w-64 h-64 bg-gradient-to-br from-purple-800 to-purple-100 rounded-full blur-2xl opacity-50'></div> */}
-      <div className="absolute -top-48 -left-48 w-[500px] h-[500px] bg-gradient-to-tr from-purple-800 via-indigo-600 to-pink-400 rounded-full blur-3xl opacity-30 animate-gradient-pulse"></div>
+   <div className="absolute -top-48 -left-48 w-[500px] h-[500px] bg-gradient-to-tr from-purple-800 via-indigo-600 to-pink-400 rounded-full blur-3xl opacity-30 animate-gradient-pulse"></div>
 <div className="absolute -bottom-48 -right-48 w-[600px] h-[600px] bg-gradient-to-tl from-purple-900 via-blue-400 to-pink-300 opacity-25 blur-3xl animate-gradient-float"></div>
 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-700/30 via-transparent to-pink-400/30 blur-[100px] opacity-15"></div>
 
@@ -84,7 +85,8 @@ const MyProfile = () => {
      
 
 <div className='flex flex-col items-center gap-4 relative z-10'>
-  <div className='flex items-center gap-8 w-full'>
+<div className='flex flex-col sm:flex-row items-center gap-6 sm:gap-8 w-full'>
+
     {/* Photo Section - Left Side */}
    
   
@@ -178,7 +180,7 @@ const MyProfile = () => {
     <div className='flex-1'>
       {isEdit ? (
         <input
-          className='text-3xl font-bold bg-white p-3 rounded-lg border-2 border-purple-100 focus:outline-none focus:border-purple-900 focus:ring-2 focus:ring-purple-100 w-full'
+          className='text-2xl sm:text-3xl  font-bold bg-white p-3 rounded-lg border-2 border-purple-100 focus:outline-none focus:border-purple-900 focus:ring-2 focus:ring-purple-100 w-full'
           type='text'
           value={userData.name}
           onChange={(e) => setUserData({ ...userData, name: e.target.value })}
@@ -192,7 +194,7 @@ const MyProfile = () => {
 
       <div className='space-y-6 relative z-10'>
         {/* Contact Information Section */}
-        <div className='bg-purple-50 p-6 rounded-xl'>
+        <div className='bg-purple-50 p-4 sm:p-6 rounded-xl'>
           <h2 className='text-lg font-semibold text-purple-600 mb-4 flex items-center gap-2'>
             <img src={assets.contact_icon} className='w-5' alt='' />
             Contact Information
@@ -248,7 +250,7 @@ const MyProfile = () => {
         </div>
 
         {/* Basic Information Section */}
-        <div className='bg-purple-50 p-6 rounded-xl'>
+        <div className='bg-purple-50 p-4 sm:p-6 rounded-xl'>
           <h2 className='text-lg font-semibold text-purple-600 mb-4 flex items-center gap-2'>
             <img src={assets.info_icon} className='w-5' alt='' />
             Basic Information

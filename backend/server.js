@@ -24,8 +24,6 @@ app.use(cookieParser())
 const allowedOrigins = [
   "http://localhost:5173", // local user panel
   "http://localhost:5174", // local admin panel
-  process.env.CLIENT_ORIGIN, // deployed user panel
-  process.env.ADMIN_ORIGIN,   // deployed admin panel
   "https://doctor-booking-appointment-application.vercel.app", // Deployed user panel
   "https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app" // Deployed admin panel
 
