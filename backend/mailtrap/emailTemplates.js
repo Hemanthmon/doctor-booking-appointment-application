@@ -322,8 +322,8 @@ export const WELCOME_MAIL_TEMPLATE = (name) => `<!DOCTYPE html>
             </div>
             <p>Start managing your healthcare today. Log in now to book your next appointment.</p>
             <div class="button-container">
-                <a href="[Login Link]" class="button">Login</a>
-                <a href="[View Doctors Link]" class="button">Explore Doctors</a>
+                <a href="https://doctor-booking-appointment-application.vercel.app/login" class="button">Login</a>
+                <a href="https://doctor-booking-appointment-application.vercel.app/doctors" class="button">Explore Doctors</a>
             </div>
         </div>
         <div class="footer">
@@ -617,7 +617,7 @@ export const WELCOME_DOCTOR_TEMPLATE = (name, email, password) => `
             <p><strong>Username:</strong> ${email}</p>
             <p><strong>Password:</strong> ${password}</p>
         </div>
-        <a href="https://priscripto.com/login" class="login-link">Login to Your Account</a>
+        <a href="https://doctor-booking-appointment-application-6gu7.vercel.app/" class="login-link">Login to Your Account</a>
         <p>
             Please explore our platform and feel free to reach out for any assistance.
         </p>
