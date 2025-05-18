@@ -26,7 +26,8 @@ const allowedOrigins = [
   "http://localhost:5173", // local user panel
   "http://localhost:5174", // local admin panel
   "https://doctor-booking-appointment-application.vercel.app", // Deployed user panel
-  "https://doctor-booking-appointment-application-6gu7-bg7b4nbd7.vercel.app" // Deployed admin panel
+  "https://doctor-booking-appointment-application-6gu7.vercel.app"
+ // Deployed admin panel
 
 ];
 
