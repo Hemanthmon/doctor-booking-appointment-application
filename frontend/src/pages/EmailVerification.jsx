@@ -194,14 +194,14 @@ const EmailVerification = () => {
           <p className='text-center text-purple-500 mb-6'>
             Enter the 6-digit code sent to your email address.
           </p>
-          <div className='text-center font-semibold text-purple-700 flex justify-center items-center space-x-2'>
+          {/* <div className='text-center font-semibold text-purple-700 flex justify-center items-center space-x-2'>
             <span>{email}</span>
             <button 
               onClick={() => navigate('/signup')}
               className='text-blue-600 underline hover:text-blue-800 text-sm'>
               Edit
             </button>
-          </div>
+          </div> */}
 
           {/* <p className="text-center text-red-600 font-semibold">
             Code expires in: {formatTime(recentTimeLeft > 0 ? recentTimeLeft : timeLeft)}
