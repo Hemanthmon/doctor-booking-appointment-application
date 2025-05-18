@@ -1,4 +1,5 @@
 # 🏥 Healthcare Management System – Professional Documentation
+![image](https://github.com/user-attachments/assets/55d4a85e-dfd1-4088-a7bd-ef7331f1b956)
 
 ## 🔷 Introduction
 
